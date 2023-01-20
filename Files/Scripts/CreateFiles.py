@@ -16,19 +16,11 @@ def SlotOFHero(Nombre, descripción):
     }
     return nameHero
 
-##crea una habilidad a nombre de una categoria
-def SlotOFHability(Categoria, Nombre, Habilidad, descripción):
 
-    name = {
-        "Caterigoria: " : Categoria,
-        "Nombre: " : Nombre,
-        "Habilidad: " : Habilidad,
-        "Descripción: " : descripción
-    }
 
-    return name
+slots = []
+name = {}
 
-slots = [""]
 class Definition:
     def CheckFile():
         if os.path.isfile("Data/dat.dat"):
@@ -36,12 +28,49 @@ class Definition:
         else:
             create()
 
+
     def CreateCategory(newCategory):
 
         slots.append(newCategory)
 
-        for i in len(slots):
-            print(slots[i])
+    ##crea una habilidad a nombre de una categoria
+
+    def SlotOFHability(Nombre, Habilidad, descripción, Categoria):
+        """ Crea un espacio para habilidad.\n
+        :param Nombre El objeto a crear
+        :param Habilidad Que es lo que hace el objeto
+        :param descripción Descripción del objeto
+        :param Categoria Objeto al cual pertenece.
+        """
+
+        ver = False
+        lenght = len(slots)
+
+
+
+        for i in range(lenght):
+            print("h")
+            if slots[i] == Categoria:
+                name = {
+                    "Nombre: " : Nombre,
+                    "Habilidad: " : Habilidad,
+                    "Descripción: " : descripción,
+                    "Categoria: " : Categoria
+                }
+            elif lenght == i:
+                ver = True
+
+        if ver:
+            this = CreateCategory(Categoria)
+            print("no encontre la categoria")
+            name = {
+                "Nombre: " : Nombre,
+                "Habilidad: " : Habilidad,
+                "Descripción: " : descripción,
+                "Categoria: " : this
+            }
+
+        return name
 
     def AddObjectTo(Category, name):
 
