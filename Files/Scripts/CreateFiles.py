@@ -16,12 +16,24 @@ def SlotOFHero(Nombre, descripción):
     }
     return nameHero
 
+def Category(Category):
+
+    slots.append(Category)
+    return slots
 
 
-slots = []
-name = {}
-
+slots = ["Default"]
 class Definition:
+
+    def ExitGeneral(entrace):
+
+        if entrace == "*":
+            return True
+        else:
+            print("*"*20)
+            print("Volveremos a ejecutar")
+            print("*"*20, "\n")
+
     def CheckFile():
         if os.path.isfile("Data/dat.dat"):
             print("Archivo Encontrado")
@@ -30,8 +42,7 @@ class Definition:
 
 
     def CreateCategory(newCategory):
-
-        slots.append(newCategory)
+        Category(newCategory)
 
     ##crea una habilidad a nombre de una categoria
 
@@ -42,35 +53,44 @@ class Definition:
         :param descripción Descripción del objeto
         :param Categoria Objeto al cual pertenece.
         """
+        name = {}
 
         ver = False
         lenght = len(slots)
 
-
-
         for i in range(lenght):
             print("h")
+
+
             if slots[i] == Categoria:
+                print("h")
                 name = {
                     "Nombre: " : Nombre,
                     "Habilidad: " : Habilidad,
                     "Descripción: " : descripción,
                     "Categoria: " : Categoria
                 }
-            elif lenght == i:
+                return name
+            else:
                 ver = True
 
-        if ver:
-            this = CreateCategory(Categoria)
-            print("no encontre la categoria")
-            name = {
-                "Nombre: " : Nombre,
-                "Habilidad: " : Habilidad,
-                "Descripción: " : descripción,
-                "Categoria: " : this
-            }
+            if ver:
+                this = Category(Categoria)
+                this = slots.pop()
+                print("no encontre la categoria")
+                name = {
+                    "Nombre: " : Nombre,
+                    "Habilidad: " : Habilidad,
+                    "Descripción: " : descripción,
+                    "Categoria: " : this
+                }
+                return name
+
+
+
 
         return name
+
 
     def AddObjectTo(Category, name):
 
