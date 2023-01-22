@@ -1,5 +1,9 @@
 ##Esta tiene como función el crear archivos y asignarles valores
-import os
+import logging, sys
+from os import system
+
+#Imprimir debug
+logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 
 #Clase general donde se guarda
 Matrix = []
@@ -40,23 +44,23 @@ def Category(name, obj, env, npc):
 
     #Agregan objetos
     if obj:
+
         ObjectSlot.append(name)
+        logging.debug(ObjectSlot)
+        if len(ObjectSlot) == 1:
+            Matrix.append(ObjectSlot)
+    elif env:
 
-    if env:
         EnvioSlot.append(name)
+        logging.debug(EnvioSlot)
+        if len(EnvioSlot) == 4:
+            Matrix.append(EnvioSlot)
+    elif npc:
 
-    if npc:
         npcSlot.append(name)
-
-    #Verifica si debe o no agregar un objeto
-    if len(ObjectSlot) == 1:
-        Matrix.append(ObjectSlot)
-
-    if len(EnvioSlot) == 1:
-        Matrix.append(EnvioSlot)
-
-    if len(npcSlot) == 1:
-        Matrix.append(npcSlot)
+        logging.debug(npcSlot)
+        if len(npcSlot) == 1:
+            Matrix.append(npcSlot)
 
 def SearchCategory(Category, Objects, Type):
     """
@@ -98,7 +102,8 @@ class Definition:
         1 - Categorias \n
         2 - Objetos \n
         3 - Ambiente general \n
-        4 - Personaje
+        4 - Recodatorio \n
+        5 - Personaje
         :param case:
         :return:
         """
@@ -106,7 +111,8 @@ class Definition:
 
         if case == 0:
             lab
-            print("Crea una categoria y edita un objeto")
+            print("              DocWriter 0.1")
+            print("\n Desarrollado por: Z3R0_GT, Jeremi \n")
         elif case == 1:
             lab
             print("Creador de categorias")
@@ -124,7 +130,9 @@ class Definition:
         elif case == 5:
             lab
             print("Creador de Personaje")
-
+        elif case == 6:
+            lab
+            print("Programa finalizado")
 
     def ExitGeneral(entrace):
         """
@@ -164,14 +172,14 @@ class Definition:
         :return:
         """
 
-        if type == "1" or type == "Objeto":
+        if type == 1 or type == "Objeto":
             Category(newCategory,True, False, False)
-        elif type == 2 or type == "Ambiente":
-            Category(newCategory,False,True,False)
-        elif type == 3 or type == "Personaje":
-            Category(newCategory,False,False,True)
 
-    ##crea una habilidad a nombre de una categoria
+        if type == 2 or type == "Ambiente":
+            Category(newCategory,False,True,False)
+
+        if type == 3 or type == "Personaje":
+            Category(newCategory,False,False,True)
 
     def SlotOFHability(Nombre, Habilidad, descripción, Categoria, Type, TypeEnv="Ciudad"):
         """Crea un espacio dentro del array "slots". \n
@@ -199,7 +207,7 @@ class Definition:
                         "Descripción ": descripción,
                         "Categoria ": Categoria
                     }
-                    SearchCategory(Categoria, Objects, 0)
+                    SearchCategory(Categoria, Objects, 1)
                     return Objects
 
             ver = True
@@ -217,7 +225,6 @@ class Definition:
 
         elif Type == 2:
             lenght = len(EnvioSlot)
-
             for i in range(lenght):
                 if EnvioSlot[i] == Categoria:
                     ENV = {
@@ -226,20 +233,20 @@ class Definition:
                         "Historia:":Habilidad,
                         str("Categoria del " + TypeEnv):Categoria
                     }
-                    SearchCategory(Categoria,ENV,2)
+                    SearchCategory(Categoria, ENV, 2)
                     return ENV
-            ver = True
 
+            ver = True
             if ver:
-                Category(Categoria,False,True,False)
-                print("Su categoria no fue encontrada, \nhe creado una nueva ")
+                Category(Categoria, False, True, False)
+                print("Su categoria no fue encontrada \nhe creado una nueva ")
                 ENV = {
                     TypeEnv:Nombre,
                     "Descripción ": descripción,
                     "Historia":Habilidad,
-                    str("Categoria del "+ TypeEnv):Categoria
+                    str("Categoria de "+ TypeEnv):Categoria
                 }
-                SearchCategory(Categoria,ENV,2)
+                SearchCategory(Categoria, ENV, 2)
                 return ENV
 
         elif Type == 3:
@@ -252,12 +259,12 @@ class Definition:
                         "Historia":Habilidad,
                         "Tipo de Actuación":Categoria
                     }
-                    SearchCategory(Categoria,NPC,3)
+                    SearchCategory(Categoria, NPC, 3)
                     return NPC
 
             ver = True
             if ver:
-                Category(Categoria,False,False,True)
+                Category(Categoria, False, False, True)
                 print("Su categoria no fue encontrada, \nhe creado una nueva ")
                 NPC = {
                     "Nombre":Nombre,
@@ -265,7 +272,7 @@ class Definition:
                     "Historia":Habilidad,
                     "Tipo de Actuación":Categoria
                 }
-                SearchCategory(Categoria,False,False,True)
+                SearchCategory(Categoria, NPC, 3)
                 return NPC
 
     def SolicityInfo():
