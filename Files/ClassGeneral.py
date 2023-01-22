@@ -1,56 +1,93 @@
+import time
 from Scripts.CreateFiles import *
 
 ##Importa eventos dependiendo de la funcióna llamar
 from ChangedHistory import *
 
-#Definition.CheckFile()
 
 
 
-control = True
 def GeneralProgress():
-    select = input("\n ¿quieres crear un objeto o una categoria?")
+    select = input("\n ¿Quieres crear un objeto o una categoria? \nR: ")
 
     if select == "categoria":
         while True:
-            category = str(input("Nombre de categoria"))
-            cat = Definition.CreateCategory(category)
+            Definition.LabelNot(1)
+
+            print("\n1- Objeto /// 2- Ambiente /// 3 - Personaje")
+            des = input("Selecciona una opción de categoria \nR:")
+
+            category = str(input("\nNombre de categoria \nR: "))
+            cat = Definition.CreateCategory(category, des)
+
+            #Definition.CheckFile(slots)
 
             vec = Definition.ExitGeneral(input("¿Quiere salir?\n R: "))
-
             if vec:
-                break
+                select = ""
+                GeneralProgress()
 
     elif select == "objeto":
         while True:
-            print("*"*20)
-            print("Agrega un objeto")
-            print("*"*20)
+            Definition.LabelNot(2)
 
-            object = str(input("¿Cual es nombre del objeto? \n R: "))
+            object = str(input("\n¿Cual es nombre del objeto? \n R: "))
             hability = str(input("\n ¿Habilidad u efecto?\n R: "))
             desc = str(input("\n ¿Descripcion del objeto?\n R: "))
             category = str(input("\n ¿cual es la categoria a la que pertenece este objeto?\n R: "))
 
-            pur = Definition.SlotOFHability(object,hability,desc,category)
-
+            pur = Definition.SlotOFHability(object, hability, desc, category, 1)
+            print(pur)
 
             vec = Definition.ExitGeneral(input("¿Quiere salir?\n R: "))
-            if vec:
-                break
-    elif select == "editar":
 
+            if vec:
+                GeneralProgress()
+
+    elif select == "editar":
+        cer = Definition.SolicityInfo()
+
+        vec = Definition.ExitGeneral(input("¿Quiere salir?\n R: "))
+        if vec:
+            GeneralProgress()
+    elif select == "Ambiente":
+        Definition.LabelNot(3)
+
+        object = str(input("\n¿Cual es nombre del lugar? \n R: "))
+        hability = str(input("\n ¿Cual es la historia?\n R: "))
+        desc = str(input("\n ¿Como se ve?\n R: "))
+        category = str(input("\n ¿cual es la categoria (nivel de importancia)?\n R: "))
+
+        Definition.LabelNot(4)
+
+        temp = input("Desea darle un nuevo tipo de zona al Ambiente/zona\nY/N: ")
+        if temp == "Y" or temp == "y":
+            Type = input("¿Como se llama tu Ambiente/zona")
+            ver = Definition.SlotOFHability(object, hability, desc, category, 2, Type)
+            print(ver)
+        else:
+            ver =Definition.SlotOFHability(object, hability, desc, category, 2)
+            print(ver)
+
+        vec = Definition.ExitGeneral(input("¿Quiere salir?\nR: "))
+        if vec:
+            GeneralProgress()
+    elif select == "Personajes":
         pass
 
-print("*"*10)
-print("Crea una categoria y edita un objeto")
-print("*"*10)
 
+
+
+
+
+    elif select == "*":
+        pass
+
+    vec = Definition.ExitGeneral(input("\n¿Quiere salir del programa?\n R: "))
+    if vec:
+        GeneralProgress()
+        Definition.ExitGeneral("no")
+        time.sleep(5)
+
+Definition.LabelNot(0)
 GeneralProgress()
-
-ext = str(input("¿seguro que quieres salir?\n R: "))
-if ext == "*":
-    print("Programa finalizado")
-else:
-
-    GeneralProgress()
