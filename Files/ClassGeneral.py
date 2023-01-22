@@ -1,4 +1,5 @@
 import time
+from os import system
 from Scripts.CreateFiles import *
 
 ##Importa eventos dependiendo de la funcióna llamar
@@ -38,6 +39,7 @@ def GeneralProgress():
             time.sleep(4)
             vec = Definition.ExitGeneral(input("¿Quiere salir?\n R: "))
             if vec:
+                system("cls")
                 GeneralProgress()
 
     elif select == "objeto":
@@ -57,6 +59,7 @@ def GeneralProgress():
             vec = Definition.ExitGeneral(input("¿Quiere salir?\n R: "))
 
             if vec:
+                system("cls")
                 GeneralProgress()
 
     elif select == "editar":
@@ -64,6 +67,7 @@ def GeneralProgress():
 
         vec = Definition.ExitGeneral(input("¿Quiere salir?\n R: "))
         if vec:
+            system("cls")
             GeneralProgress()
     elif select == "Ambiente":
         Definition.LabelNot(3)
@@ -83,6 +87,7 @@ def GeneralProgress():
         if temp == "Y" or temp == "y":
             Type = input("¿Como se llama tu Ambiente/zona")
             ver = Definition.SlotOFHability(object, hability, desc, category, 2, Type)
+
             print(ver)
         else:
             ver =Definition.SlotOFHability(object, hability, desc, category, 2)
@@ -92,6 +97,7 @@ def GeneralProgress():
 
         vec = Definition.ExitGeneral(input("¿Quiere salir?\nR: "))
         if vec:
+            system("cls")
             GeneralProgress()
     elif select == "Personajes":
         Definition.LabelNot(4)
@@ -110,13 +116,19 @@ def GeneralProgress():
         time.sleep(4)
         vec = Definition.ExitGeneral(input("¿Quiere salir?\nR: "))
         if vec:
+            system("cls")
             GeneralProgress()
     elif select == "*":
         pass
     vec = Definition.ExitGeneral(input("\n¿Quiere salir del programa?\n R: "))
     if vec:
+        system("cls")
         Definition.LabelNot(6)
         time.sleep(5)
+    else:
+        system("cls")
+        GeneralProgress()
+
 
 Definition.LabelNot(0)
 GeneralProgress()

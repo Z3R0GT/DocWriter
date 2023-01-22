@@ -276,5 +276,6 @@ class Definition:
                 return NPC
 
     def SolicityInfo():
-        print(Matrix)
+        for i in range(len(Matrix)):
+            print(Matrix[i])
         pass
