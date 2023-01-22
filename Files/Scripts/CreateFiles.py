@@ -133,7 +133,7 @@ class Definition:
         elif case == 6:
             lab
             print("Programa finalizado")
-
+#
     def ExitGeneral(entrace):
         """
         Recibe una entrada "*" para salir, retornara True para confirmar la salida

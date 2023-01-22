@@ -6,7 +6,7 @@ from ChangedHistory import *
 
 
 
-
+#
 def GeneralProgress():
     print("*"*42)
     print("*               Menú de inicio           *\n"
