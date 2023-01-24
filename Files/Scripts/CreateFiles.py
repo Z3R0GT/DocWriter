@@ -1,6 +1,6 @@
 ##Esta tiene como función el crear archivos y asignarles valores
-import logging, sys
-from os import system
+import logging, sys, os
+from Files.ChangedHistory import *
 
 #Imprimir debug
 logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
@@ -14,21 +14,19 @@ EnvioSlot = ["Ciudad", "Paisaje", "Pueblo"]
 #npcSlot - espacio para personaje
 npcSlot = []
 
-def create(Matrix, check):
+def create():
     """
     Crea un archivo, comprueba si existe el archivo "check"
     matrix sera el arreglo de datos a guardar
-    :param Matrix:
     :param check:
     :return:
     """
-    if check:
-        file = open("Data/dat.dat", "w")
-        file.close()
-    elif not check:
-        file = open("Data/dat.dat", "w")
-        file.write(Matrix)
-        file.close()
+    try:
+        with open("Scripts/Data/dat.dat","w") as file:
+            file.write(str(Matrix))
+            file.close()
+    except:
+        print("A ocurrido un error, report to: https://github.com/Z3R0GT/DocWriter/issues")
 
 def Category(name, obj, env, npc):
     """
@@ -148,17 +146,15 @@ class Definition:
             print("Volveremos a ejecutar")
             print("*" * 20, "\n")
 
-    def CheckFile(Matrix):
+    def CheckFile():
         """
         Revisara si archivo esta en el destino, sino, lo creara
 
         :param Matrix:
         :return:
         """
-        if os.path.isfile("Data/dat.dat"):
-            create(Matrix, False)
-        else:
-            create(Matrix, True)
+        NotifyEvents.EventInput(7, "")
+        create()
 
     def CreateCategory(newCategory, type):
         """
@@ -173,13 +169,32 @@ class Definition:
         """
 
         if type == 1 or type == "Objeto":
+
             Category(newCategory,True, False, False)
 
+            if type == 1:
+                NotifyEvents.EventInput(5, f"Se creo {newCategory} del tipo Objeto")
+            else:
+                NotifyEvents.EventInput(5, f"Se creo {newCategory} del tipo {type}")
+
         if type == 2 or type == "Ambiente":
+
             Category(newCategory,False,True,False)
 
+            if type == 2:
+                NotifyEvents.EventInput(5, f"Se creo {newCategory} del tipo Ambiente")
+            else:
+                NotifyEvents.EventInput(5, f"Se creo {newCategory} del tipo {type}")
+
+
         if type == 3 or type == "Personaje":
+
             Category(newCategory,False,False,True)
+
+            if type == 3:
+                NotifyEvents.EventInput(5, f"Se creo {newCategory} del tipo Personaje")
+            else:
+                NotifyEvents.EventInput(5, f"Se creo {newCategory} del tipo {type}")
 
     def SlotOFHability(Nombre, Habilidad, descripción, Categoria, Type, TypeEnv="Ciudad"):
         """Crea un espacio dentro del array "slots". \n
@@ -208,6 +223,10 @@ class Definition:
                         "Categoria ": Categoria
                     }
                     SearchCategory(Categoria, Objects, 1)
+                    NotifyEvents.EventInput(2, f"El objeto {Objects}\n"
+                                               f" se enlisto\n"
+                                               f" en la categoria {ObjectSlot[i]}")
+
                     return Objects
 
             ver = True
@@ -221,6 +240,9 @@ class Definition:
                     "Categoria ": Categoria
                 }
                 SearchCategory(Categoria, Objects, 1)
+                NotifyEvents.EventInput(1, f"la categoria {Categoria}\n"
+                                           f" fue creada y \n"
+                                           f"{Objects} se le fue otorgado")
                 return Objects
 
         elif Type == 2:
@@ -234,6 +256,9 @@ class Definition:
                         str("Categoria del " + TypeEnv):Categoria
                     }
                     SearchCategory(Categoria, ENV, 2)
+                    NotifyEvents.EventInput(2, f"los objetos de {ENV}\n"
+                                               f" se le agregaron a {Categoria}\n"
+                                               f" del tipo de ciudad {TypeEnv}")
                     return ENV
 
             ver = True
@@ -247,6 +272,9 @@ class Definition:
                     str("Categoria de "+ TypeEnv):Categoria
                 }
                 SearchCategory(Categoria, ENV, 2)
+                NotifyEvents.EventInput(4, f"los objetos de {ENV}\n"
+                                           f" se adjuntaron a \n"
+                                           f"la nueva categoria {EnvioSlot}")
                 return ENV
 
         elif Type == 3:
@@ -260,6 +288,8 @@ class Definition:
                         "Tipo de Actuación":Categoria
                     }
                     SearchCategory(Categoria, NPC, 3)
+                    NotifyEvents.EventInput(2, f"los datos {NPC}\n"
+                                               f" del personaje, se adjuntaron a {Categoria}")
                     return NPC
 
             ver = True
@@ -273,9 +303,12 @@ class Definition:
                     "Tipo de Actuación":Categoria
                 }
                 SearchCategory(Categoria, NPC, 3)
+                NotifyEvents.EventInput(3, f"Los datos {NPC}\n"
+                                           f"se agregaron a {Categoria}")
                 return NPC
 
     def SolicityInfo():
+        NotifyEvents.EventInput(6, "")
         for i in range(len(Matrix)):
             print(Matrix[i])
         pass

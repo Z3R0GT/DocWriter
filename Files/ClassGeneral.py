@@ -6,8 +6,6 @@ from Scripts.CreateFiles import *
 from ChangedHistory import *
 
 
-
-#
 def GeneralProgress():
     print("*"*42)
     print("*               Menú de inicio           *\n"
@@ -19,7 +17,9 @@ def GeneralProgress():
           "*- categoria                             *\n"
           "*- objeto                                *\n"
           "*- Ambiente                              *\n"
-          "*- Personaje                             *")
+          "*- Personaje                             *\n"
+          "*- editar                                *\n"
+          "*- Guardar                               *")
     print("*"*42)
     time.sleep(5)
     select = input("\n ¿Quieres crear? \nR: ")
@@ -36,7 +36,9 @@ def GeneralProgress():
             category = str(input("\nNombre de categoria \nR: "))
             cat = Definition.CreateCategory(category, des)
 
+            Definition.CheckFile()
             time.sleep(4)
+
             vec = Definition.ExitGeneral(input("¿Quiere salir?\n R: "))
             if vec:
                 system("cls")
@@ -54,10 +56,10 @@ def GeneralProgress():
             pur = Definition.SlotOFHability(object, hability, desc, category, 1)
             print(pur)
 
+            Definition.CheckFile()
             time.sleep(5)
 
             vec = Definition.ExitGeneral(input("¿Quiere salir?\n R: "))
-
             if vec:
                 system("cls")
                 GeneralProgress()
@@ -93,6 +95,7 @@ def GeneralProgress():
             ver =Definition.SlotOFHability(object, hability, desc, category, 2)
             print(ver)
 
+        Definition.CheckFile()
         time.sleep(4)
 
         vec = Definition.ExitGeneral(input("¿Quiere salir?\nR: "))
@@ -100,7 +103,7 @@ def GeneralProgress():
             system("cls")
             GeneralProgress()
     elif select == "Personajes":
-        Definition.LabelNot(4)
+        Definition.LabelNot(5)
 
         time.sleep(3)
 
@@ -115,15 +118,24 @@ def GeneralProgress():
 
         time.sleep(4)
         vec = Definition.ExitGeneral(input("¿Quiere salir?\nR: "))
+        Definition.CheckFile()
         if vec:
             system("cls")
             GeneralProgress()
+
+    elif select == "Guardar":
+        print("Su archivo fue guardado exitosamente ")
+        Definition.CheckFile()
+
     elif select == "*":
         pass
+
+
     vec = Definition.ExitGeneral(input("\n¿Quiere salir del programa?\n R: "))
     if vec:
         system("cls")
         Definition.LabelNot(6)
+        NotifyEvents.EventInput(8, "")
         time.sleep(5)
     else:
         system("cls")
